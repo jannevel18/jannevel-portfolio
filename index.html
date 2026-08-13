@@ -1,24 +1,35 @@
 <!doctype html>
-<html lang="en"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260728-05-94d8f20"}');</script><script src="/_sdk/a27874207e105461.telemetry_sdk.js" integrity="sha512-wgI5N9F7oA2h3vH+benMYIv4wGqTct4nKWakqgvfgRyBLmfYq8q/fi6gkfWKd2hMsyN+VQ/qOAOpxybwkcoxlA=="></script>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jannevel Portfolio</title>
+  
+  <!-- ========== LIBRARY ========== -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&amp;family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  
+  <!-- ========== CSS ========== -->
   <style>
+    /* ============================================================
+       ROOT VARIABLES
+       ============================================================ */
     :root {
-      --ink: #07111f;
-      --blue: #2e7dff;
-      --pale-blue: #dce9ff;
-      --white: #f8fbff;
-      --line: rgba(7, 17, 31, .18);
+      --ink: #1f0707;
+      --blue: #ff2e2e;
+      --pale-blue: #ffdcdc;
+      --white: #fff8f8;
+      --line: rgba(31, 7, 8, 0.18);
     }
 
     html { scroll-behavior: smooth; }
     body { font-family: "Work Sans", sans-serif; overflow-x: hidden; }
     .display-font { font-family: "Fraunces", serif; }
 
+    /* ============================================================
+       GRAIN TEXTURE
+       ============================================================ */
     .grain {
       position: fixed;
       inset: 0;
@@ -28,19 +39,34 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
     .nav-shell { transition: background-color .35s ease, box-shadow .35s ease; }
     .nav-shell.is-scrolled {
-      background: rgba(7, 17, 31, .97);
-      box-shadow: 0 10px 28px rgba(7, 17, 31, .23);
+      background: rgba(31, 7, 7, .97);
+      box-shadow: 0 10px 28px rgba(31, 7, 7, .23);
     }
 
+    /* ============================================================
+       HERO
+       ============================================================ */
     .hero-image-wrap::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, rgba(7,17,31,.91) 0%, rgba(7,17,31,.54) 54%, rgba(7,17,31,.12) 100%);
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.91) 0%, rgba(0, 0, 0, 0.54) 54%, rgba(0, 0, 0, 0.12) 100%);
     }
 
+    @media (max-width: 767px) {
+      .hero-image-wrap::after {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.93));
+      }
+    }
+
+    /* ============================================================
+       UTILITY
+       ============================================================ */
     .eyebrow::before {
       content: "";
       display: inline-block;
@@ -51,18 +77,29 @@
       background: currentColor;
     }
 
+    .focus-ring:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 4px;
+    }
+
+    /* ============================================================
+       WORK CARDS
+       ============================================================ */
     .work-card {
       transition: transform .45s cubic-bezier(.2,.75,.2,1), box-shadow .45s ease;
     }
 
     .work-card:hover, .work-card:focus-within {
       transform: translateY(-10px) rotate(-.4deg);
-      box-shadow: 0 26px 50px rgba(7, 17, 31, .2);
+      box-shadow: 0 26px 50px rgba(31, 7, 7, 0.2);
     }
 
     .work-card img { transition: transform .7s cubic-bezier(.2,.75,.2,1); }
     .work-card:hover img, .work-card:focus-within img { transform: scale(1.06); }
 
+    /* ============================================================
+       REVEAL ANIMATION (SCROLL)
+       ============================================================ */
     .reveal {
       opacity: 0;
       transform: translateY(24px);
@@ -71,10 +108,13 @@
 
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* ============================================================
+       CONTACT ORBIT
+       ============================================================ */
     .contact-orbit {
       width: 12rem;
       height: 12rem;
-      border: 1px solid rgba(248, 251, 255, .36);
+      border: 1px solid rgba(255, 248, 248, 0.36);
       border-radius: 999px;
       animation: drift 7s ease-in-out infinite;
     }
@@ -84,154 +124,595 @@
       50% { transform: rotate(8deg) translateY(-12px); }
     }
 
-    .focus-ring:focus-visible {
-      outline: 3px solid var(--blue);
-      outline-offset: 4px;
+    /* ============================================================
+       MODAL
+       ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
     }
 
-    @media (max-width: 767px) {
-      .hero-image-wrap::after {
-        background: linear-gradient(180deg, rgba(7,17,31,.35), rgba(7,17,31,.93));
-      }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-window {
+      background: #fff8f8;
+      max-width: 520px;
+      width: 90%;
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+      transform: scale(0.95) translateY(10px);
+      transition: transform 0.25s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active .modal-window {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .modal-header h2 {
+      font-family: "Fraunces", serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #1f0708;
+      margin: 0;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #1f0707;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      padding: 0 0.3rem;
+      line-height: 1;
+    }
+
+    .close-btn:hover {
+      opacity: 1;
+    }
+
+    .modal-body .article-meta {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ff2e2e;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-body .article-title {
+      font-family: "Fraunces", serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #1f0707;
+    }
+
+    .modal-body p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #441f1f;
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-body .work-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .modal-body .work-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #f7eeef;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 500;
+      color: #1f0707;
+    }
+
+    .modal-body .work-list li::before {
+      content: "✦";
+      color: #ff2e2e;
+    }
+
+    .modal-body .badge {
+      display: inline-block;
+      background: #ffeeee;
+      color: #bf1a1a;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.7rem;
+      border-radius: 40px;
+      margin-right: 0.3rem;
+    }
+
+    .modal-footer {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f5e0e0;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+      color: #2f3b5a;
+    }
+
+    .modal-footer span {
+      background: #fef3f3;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+    }
+
+    .explore-trigger {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .explore-trigger:hover {
+      opacity: 0.7;
     }
   </style>
-  <script src="/_sdk/935a53bc2e11fb8d.data_sdk.js" type="text/javascript" integrity="sha512-qr2oyPnEys1WebcOABaRh6hG77r5PWpqeWW6JTKbRJqly/INsfBi31CVNlTmHqjgeLpkVmmHZJUdxSx/32tOFQ=="></script>
-  <script src="/_sdk/6030e540d4419216.resizing_sdk.js" type="text/javascript" integrity="sha512-b5KWzyoXsbWP4smq4sftIi6Kts4YVBpBsz0BwCViwbBJkK64a3/Z6ZMdWA+qnplNcXw4mhZeqvQi3mOosiRJdA=="></script>
- </head>
- <body data-template-id="__page-root" class="w-full text-[#07111f]" style="background: rgb(248, 251, 255);">
+</head>
+
+
+<!-- ==============================================================
+     BODY
+     ============================================================== -->
+<body data-template-id="__page-root" class="w-full text-[#07111f]" style="background: rgb(255, 248, 248);">
+
+  <!-- ==============================================================
+       GRAIN OVERLAY
+       ============================================================== -->
   <div class="grain" aria-hidden="true"></div>
-  <nav id="main-nav" class="nav-shell fixed top-0 left-0 z-50 w-full bg-[#07111f]/90">
-   <div class="w-full max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
-    <a href="#top" data-template-id="nav-brand" class="canva-link display-font font-semibold tracking-tight text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 25px;">JanNevel /Portofolio</a>
-    <div class="hidden md:flex items-center gap-7">
-     <a href="#work" data-template-id="nav-work" class="canva-link text-xs uppercase tracking-[.16em] text-[#f8fbff] hover:text-[#72a7ff] transition-colors focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">Selected work</a> <a href="#about" data-template-id="nav-about" class="canva-link text-xs uppercase tracking-[.16em] text-[#f8fbff] hover:text-[#72a7ff] transition-colors focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">About</a> <a href="#contact" data-template-id="nav-contact" class="canva-link text-xs uppercase tracking-[.16em] text-[#f8fbff] hover:text-[#72a7ff] transition-colors focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">Contact</a>
-    </div><button id="menu-toggle" type="button" class="md:hidden text-[#f8fbff] p-2 focus-ring" aria-label="Open navigation" aria-expanded="false"> <i data-lucide="menu" width="24" height="24"></i> </button>
-   </div>
-   <div id="mobile-menu" class="hidden md:hidden border-t border-[#f8fbff]/20 px-6 py-5 bg-[#07111f]">
-    <div class="flex flex-col gap-4">
-     <a href="#work" data-template-id="mobile-nav-work" class="canva-link text-sm uppercase tracking-[.16em] text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">Selected work</a> <a href="#about" data-template-id="mobile-nav-about" class="canva-link text-sm uppercase tracking-[.16em] text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">About</a> <a href="#contact" data-template-id="mobile-nav-contact" class="canva-link text-sm uppercase tracking-[.16em] text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">Contact</a>
+
+
+  <!-- ==============================================================
+       NAVIGATION
+       ============================================================== -->
+  <nav id="main-nav" class="nav-shell fixed top-0 left-0 z-50 w-full bg-[#3C0000]/90">
+    <div class="w-full max-w-7xl mx-auto px-5 md:px-8 py-4 flex items-center justify-between">
+      
+      <!-- // BRAND -->
+      <a href="#top" data-template-id="nav-brand" class="canva-link display-font font-semibold tracking-tight text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 25px;">JanNevel /Portofolio</a>
+      
+      <!-- // DESKTOP NAV -->
+      <div class="hidden md:flex items-center gap-7">
+        <a href="#work" data-template-id="nav-work" class="canva-link text-xs uppercase tracking-[.16em] text-[#f8fbff] hover:text-[#ff8478] transition-colors focus-ring" style="color: rgb(255, 248, 248); font-weight: 600; font-style: normal; font-size: 16px;">Selected work</a>
+        <a href="#about" data-template-id="nav-about" class="canva-link text-xs uppercase tracking-[.16em] text-[#f8fbff] hover:text-[#ff8478] transition-colors focus-ring" style="color: rgb(255, 248, 249); font-weight: 600; font-style: normal; font-size: 16px;">About</a>
+        <a href="#contact" data-template-id="nav-contact" class="canva-link text-xs uppercase tracking-[.16em] text-[#f8fbff] hover:text-[#ff8478] transition-colors focus-ring" style="color: rgb(255, 248, 248); font-weight: 600; font-style: normal; font-size: 16px;">Contact</a>
+      </div>
+      
+      <!-- // MOBILE MENU TOGGLE -->
+      <button id="menu-toggle" type="button" class="md:hidden text-[#f8fbff] p-2 focus-ring" aria-label="Open navigation" aria-expanded="false">
+        <i data-lucide="menu" width="24" height="24"></i>
+      </button>
     </div>
-   </div>
+    
+    <!-- // MOBILE MENU -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[#f8fbff]/20 px-6 py-5 bg-[#07111f]">
+      <div class="flex flex-col gap-4">
+        <a href="#work" data-template-id="mobile-nav-work" class="canva-link text-sm uppercase tracking-[.16em] text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">Selected work</a>
+        <a href="#about" data-template-id="mobile-nav-about" class="canva-link text-sm uppercase tracking-[.16em] text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">About</a>
+        <a href="#contact" data-template-id="mobile-nav-contact" class="canva-link text-sm uppercase tracking-[.16em] text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">Contact</a>
+      </div>
+    </div>
   </nav>
+
+
+  <!-- ==============================================================
+       HERO / HEADER
+       ============================================================== -->
   <header id="top" class="relative w-full overflow-hidden" style="min-height:calc(100 * min(var(--vh, 1vh), 1vh));">
-   <div class="hero-image-wrap absolute inset-0">
-    <img data-template-id="hero-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/hero.jpeg" alt="A tablet displaying a digital illustration with a stylus and laptop nearby, perfect for modern digital art.">
-   </div>
-   <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 pt-32 pb-16 flex items-end" style="min-height:calc(100 * min(var(--vh, 1vh), 1vh));">
-    <div class="max-w-4xl">
-     <p data-template-id="hero-kicker" class="canva-text eyebrow text-[#72a7ff] font-semibold text-xs uppercase tracking-[.18em] mb-6" style="color: rgb(114, 167, 255); font-weight: 600; font-style: normal; font-size: 16px;">digital marketing • finance enthusiast • digital artist • social media creative </p>
-     <h1 data-template-id="hero-title" class="canva-text display-font text-[#f8fbff] font-semibold leading-[.92] max-w-3xl" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 94px; letter-spacing: -0.08rem; line-height: 0.9;">Ideas with
-range.</h1>
-     <div class="mt-8 max-w-xl flex flex-col sm:flex-row sm:items-end gap-6">
-      <p data-template-id="hero-description" class="canva-text text-[#f8fbff] leading-relaxed text-base md:text-lg" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 18px; line-height: 1.5;">A multidisciplinary portfolio where digital marketing, finance, and visual storytelling come together to create work that earns attention..</p><button id="explore-button" data-template-id="hero-button" type="button" class="canva-button focus-ring shrink-0 px-6 py-4 bg-[#2e7dff] text-[#f8fbff] font-bold text-xs uppercase tracking-[.14em] hover:bg-[#f8fbff] hover:text-[#07111f] transition-colors" style="background: rgb(46, 125, 255); color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;">Explore the work</button>
-     </div>
+    
+    <!-- // HERO BACKGROUND IMAGE -->
+    <div class="hero-image-wrap absolute inset-0">
+      <img data-template-id="hero-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/hero.jpeg" alt="A tablet displaying a digital illustration with a stylus and laptop nearby, perfect for modern digital art.">
     </div>
-   </div>
+    
+    <!-- // HERO CONTENT -->
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 pt-32 pb-16 flex items-end" style="min-height:calc(100 * min(var(--vh, 1vh), 1vh));">
+      <div class="max-w-4xl">
+        
+        <!-- // HERO KICKER -->
+        <p data-template-id="hero-kicker" class="canva-text eyebrow text-[#ff8478] font-semibold text-xs uppercase tracking-[.18em] mb-6" style="color: rgb(255, 114, 114); font-weight: 600; font-style: normal; font-size: 16px;">digital marketing • finance enthusiast • web development • social media creative</p>
+        
+        <!-- // HERO TITLE -->
+        <h1 data-template-id="hero-title" class="canva-text display-font text-[#f8fbff] font-semibold leading-[.92] max-w-3xl" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 94px; letter-spacing: -0.08rem; line-height: 0.9;">Ideas with range.</h1>
+        
+        <!-- // HERO DESCRIPTION + BUTTON -->
+        <div class="mt-8 max-w-xl flex flex-col sm:flex-row sm:items-end gap-6">
+          <p data-template-id="hero-description" class="canva-text text-[#f8fbff] leading-relaxed text-base md:text-lg" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 18px; line-height: 1.5;">A multidisciplinary portfolio where digital marketing, finance, and visual storytelling come together to create work that earns attention.</p>
+        </div>
+        <br>
+        <div style="justify-content: center;">
+            <button id="explore-button" data-template-id="hero-button" type="button" class="canva-button focus-ring shrink-0 px-6 py-4 bg-[#3c0000] text-[#f8fbff] font-bold text-xs uppercase tracking-[.14em] hover:bg-[#f8fbff] hover:text-[#07111f] transition-colors" style="text-align: center; background: rgb(255, 46, 46); color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;">Explore the work</button>
+        </div>
+        
+      </div>
+    </div>
   </header>
+
+
+  <!-- ==============================================================
+       MAIN CONTENT
+       ============================================================== -->
   <main>
-   <section id="work" data-template-id="work-section" class="canva-section w-full px-6 md:px-8 py-20 md:py-28" style="background: rgb(248, 251, 255);">
-    <div class="w-full max-w-7xl mx-auto">
-     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16 reveal">
-      <div>
-       <p data-template-id="work-kicker" class="canva-text eyebrow font-semibold text-xs uppercase tracking-[.18em] mb-4" style="color: rgb(46, 125, 255); font-weight: 600; font-style: normal; font-size: 16px;">Selected work</p>
-       <h2 data-template-id="work-title" class="canva-text display-font font-semibold leading-none max-w-2xl" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 59px; letter-spacing: -0.06rem; line-height: 0.98;">Four lenses.
-One creative practice.</h2>
+
+    <!-- ============================================================
+         SECTION: WORK
+         ============================================================ -->
+    <section id="work" data-template-id="work-section" class="canva-section w-full px-6 md:px-8 py-20 md:py-28" style="background: rgb(255, 248, 248);">
+      <div class="w-full max-w-7xl mx-auto">
+        
+        <!-- // SECTION HEADER -->
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16 reveal">
+          <div>
+            <p data-template-id="work-kicker" class="canva-text eyebrow font-semibold text-xs uppercase tracking-[.18em] mb-4" style="color: rgb(255, 46, 46); font-weight: 600; font-style: normal; font-size: 16px;">Selected work</p>
+            <h2 data-template-id="work-title" class="canva-text display-font font-semibold leading-none max-w-2xl" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 59px; letter-spacing: -0.06rem; line-height: 0.98;">Four lenses. One creative practice.</h2>
+          </div>
+          <p data-template-id="work-intro" class="canva-text max-w-md leading-relaxed opacity-80" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.6;">A mix of strategic thinking, market curiosity, social fluency, and image-making—built to turn complexity into memorable ideas.</p>
+        </div>
+        
+        <!-- // CARDS GRID -->
+        <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+          
+          <!-- =========================================================
+               CARD 1: DIGITAL MARKETING
+               ========================================================= -->
+          <article data-template-id="marketing-card" class="canva-card work-card reveal overflow-hidden flex flex-col" style="background: rgb(255, 220, 220);">
+            <div class="overflow-hidden aspect-[4/3]">
+              <img data-template-id="marketing-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/c1.jpeg">
+            </div>
+            <div class="p-7 flex flex-col grow">
+              <p data-template-id="marketing-label" class="canva-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(255, 46, 46); font-weight: 700; font-style: normal; font-size: 16px;">01 — Digital marketing</p>
+              <h3 data-template-id="marketing-title" class="canva-text display-font font-semibold mb-3" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 30px;">Audience, activated.</h3>
+              <p data-template-id="marketing-description" class="canva-text leading-relaxed text-sm opacity-80" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Strategic campaigns built from audience insights, performance data, and creative execution—designed to turn attention into measurable growth.</p>
+              <!-- // TRIGGER: MODAL MARKETING -->
+              <button class="canva-text text-xs uppercase tracking-[.15em] font-semibold mt-7 explore-trigger" data-target="modalMarketing" style="color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px; background: none; border: none; padding: 0; text-align: left;">Explore The Work</button>
+            </div>
+          </article>
+          
+          <!-- =========================================================
+               CARD 2: FINANCE ENTHUSIAST
+               ========================================================= -->
+          <article data-template-id="finance-card" class="canva-card work-card reveal overflow-hidden flex flex-col" style="transition-delay: 0.1s; background: rgb(84, 84, 84);">
+            <div class="overflow-hidden aspect-[4/3]">
+              <img data-template-id="finance-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/c2.jpeg">
+            </div>
+            <div class="p-7 flex flex-col grow">
+              <p data-template-id="finance-label" class="canva-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">02 — Finance enthusiast</p>
+              <h3 data-template-id="finance-title" class="canva-text display-font font-semibold mb-3" style="color: rgb(255, 248, 248); font-weight: 600; font-style: normal; font-size: 30px;">Number Tell Stories</h3>
+              <p data-template-id="finance-description" class="canva-text leading-relaxed text-sm opacity-80" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Exploring financial analysis, budgeting, and data-driven thinking to understand how decisions shape sustainable growth.</p>
+              <!-- // TRIGGER: MODAL FINANCE -->
+              <button class="canva-text text-xs uppercase tracking-[.15em] font-semibold mt-7 explore-trigger" data-target="modalFinance" style="color: rgb(255, 248, 248); font-weight: 700; font-style: normal; font-size: 16px; background: none; border: none; padding: 0; text-align: left;">Explore The Work</button>
+            </div>
+          </article>
+          
+          <!-- =========================================================
+               CARD 3: WEB DEVELOPMENT
+               ========================================================= -->
+          <article data-template-id="art-card" class="canva-card work-card reveal overflow-hidden flex flex-col" style="transition-delay: 0.2s; background: rgb(0, 0, 0);">
+            <div class="overflow-hidden aspect-[4/3]">
+              <img data-template-id="art-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/c3.jpeg">
+            </div>
+            <div class="p-7 flex flex-col grow">
+              <p data-template-id="art-label" class="canva-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(255, 248, 248); font-weight: 700; font-style: normal; font-size: 16px;">03 — Web Development</p>
+              <h3 data-template-id="art-title" class="canva-text display-font font-semibold mb-3" style="color: rgb(255, 248, 248); font-weight: 600; font-style: normal; font-size: 30px;">Build to be experienced</h3>
+              <p data-template-id="art-description" class="canva-text leading-relaxed text-sm opacity-80" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Responsive Website, landing pages, and digital interfaces designed with a balance of clean visual, intuitive interaction, and practical functionality.</p>
+              <!-- // TRIGGER: MODAL ART -->
+              <button class="canva-text text-xs uppercase tracking-[.15em] font-semibold mt-7 explore-trigger" data-target="modalArt" style="color: rgb(255, 248, 248); font-weight: 700; font-style: normal; font-size: 16px; background: none; border: none; padding: 0; text-align: left;">Explore The Work</button>
+            </div>
+          </article>
+          
+          <!-- =========================================================
+               CARD 4: CREATIVE SOCIAL MEDIA
+               ========================================================= -->
+          <article data-template-id="social-card" class="canva-card work-card reveal overflow-hidden flex flex-col" style="transition-delay: 0.3s; background: rgb(253, 174, 174);">
+            <div class="overflow-hidden aspect-[4/3]">
+              <img data-template-id="social-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/c4.jpeg">
+            </div>
+            <div class="p-7 flex flex-col grow">
+              <p data-template-id="social-label" class="canva-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(255, 46, 63); font-weight: 700; font-style: normal; font-size: 16px;">04 — Creative social media</p>
+              <h3 data-template-id="social-title" class="canva-text display-font font-semibold mb-3" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 30px;">Made for the scroll.</h3>
+              <p data-template-id="social-description" class="canva-text leading-relaxed text-sm opacity-80" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Platform-native concepts, content systems, and visual posts designed to feel timely, tactile, and worth sharing.</p>
+              <!-- // TRIGGER: MODAL SOCIAL -->
+              <button class="canva-text text-xs uppercase tracking-[.15em] font-semibold mt-7 explore-trigger" data-target="modalSocial" style="color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px; background: none; border: none; padding: 0; text-align: left;">Explore The Work</button>
+            </div>
+          </article>
+          
+        </div>
       </div>
-      <p data-template-id="work-intro" class="canva-text max-w-md leading-relaxed opacity-80" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 16px; line-height: 1.6;">A mix of strategic thinking, market curiosity, social fluency, and image-making—built to turn complexity into memorable ideas.</p>
-     </div>
-     <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
-      <article data-template-id="marketing-card" class="canva-card work-card reveal overflow-hidden flex flex-col" style="background: rgb(220, 233, 255);">
-       <div class="overflow-hidden aspect-[4/3]">
-        <img data-template-id="marketing-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/c1.jpeg" alt="Top view of a desk with social media hashtag, keyboard, and analytics chart in modern design.">
-       </div>
-       <div class="p-7 flex flex-col grow">
-        <p data-template-id="marketing-label" class="canva-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(46, 125, 255); font-weight: 700; font-style: normal; font-size: 16px;">01 — Digital marketing</p>
-        <h3 data-template-id="marketing-title" class="canva-text display-font font-semibold mb-3" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 30px;">Audience, activated.</h3>
-        <p data-template-id="marketing-description" class="canva-text leading-relaxed text-sm opacity-80" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Strategic campaigns built from audience insights, performance data, and creative execution—designed to turn attention into measurable growth.</p>
-        <p data-template-id="marketing-link" class="canva-text mt-7 text-xs uppercase tracking-[.14em] font-semibold" style="color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;"></p>
-       </div>
-      </article>
-      <article data-template-id="finance-card" class="canva-card work-card reveal overflow-hidden flex flex-col" style="transition-delay: 0.1s; background: rgb(84, 84, 84);">
-       <div class="overflow-hidden aspect-[4/3]">
-        <img data-template-id="finance-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/c2.jpeg" alt="Close-up of a digital stock market chart showcasing analytics on a screen.">
-       </div>
-       <div class="p-7 flex flex-col grow">
-        <p data-template-id="finance-label" class="canva-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">02 — Finance enthusiast</p>
-        <h3 data-template-id="finance-title" class="canva-text display-font font-semibold mb-3" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 30px;">Number Tell Stories</h3>
-        <p data-template-id="finance-description" class="canva-text leading-relaxed text-sm opacity-80" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Exploring financial analysis, budgeting, and data-driven thinking to understand how decisions shape sustainable growth.
-</p>
-        <p data-template-id="finance-link" class="canva-text mt-7 text-xs uppercase tracking-[.14em] font-semibold" style="color: rgb(84, 84, 84); font-weight: 700; font-style: normal; font-size: 16px;"></p>
-       </div>
-      </article>
-      <article data-template-id="art-card" class="canva-card work-card reveal overflow-hidden flex flex-col" style="transition-delay: 0.2s; background: rgb(0, 0, 0);">
-       <div class="overflow-hidden aspect-[4/3]">
-        <img data-template-id="art-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/c3.jpeg" alt="Dynamic abstract painting with vibrant brushstrokes in neon colors, creating a vivid visual impact.">
-       </div>
-       <div class="p-7 flex flex-col grow">
-        <p data-template-id="art-label" class="canva-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;">03 — Digital art</p>
-        <h3 data-template-id="art-title" class="canva-text display-font font-semibold mb-3" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 30px;">Colour with purpose</h3>
-        <p data-template-id="art-description" class="canva-text leading-relaxed text-sm opacity-80" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Character illustrations and visual experiments focused on storytelling, composition, and atmosphere.
-</p>
-        <p data-template-id="art-link" class="canva-text mt-7 text-xs uppercase tracking-[.14em] font-semibold" style="color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;"></p>
-       </div>
-      </article>
-      <article data-template-id="social-card" class="canva-card work-card reveal overflow-hidden flex flex-col" style="transition-delay: 0.3s; background: rgb(255, 255, 255);">
-       <div class="overflow-hidden aspect-[4/3]">
-        <img data-template-id="social-image" class="canva-image w-full h-full object-cover" loading="lazy" src="img/c4.jpeg" alt="Close-up of hands photographing pink stationery with a smartphone on a soft background.">
-       </div>
-       <div class="p-7 flex flex-col grow">
-        <p data-template-id="social-label" class="canva-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(46, 125, 255); font-weight: 700; font-style: normal; font-size: 16px;">04 — Creative social media</p>
-        <h3 data-template-id="social-title" class="canva-text display-font font-semibold mb-3" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 30px;">Made for the scroll.</h3>
-        <p data-template-id="social-description" class="canva-text leading-relaxed text-sm opacity-80" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Platform-native concepts, content systems, and visual posts designed to feel timely, tactile, and worth sharing.</p>
-        <p data-template-id="social-link" class="canva-text mt-7 text-xs uppercase tracking-[.14em] font-semibold" style="color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;"></p>
-       </div>
-      </article>
-     </div>
-    </div>
-   </section>
-   <section id="about" data-template-id="about-section" class="canva-section w-full px-6 md:px-8 py-20 md:py-28" style="background: rgb(220, 233, 255);">
-    <div class="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-     <div class="reveal relative">
-      <div class="absolute -left-4 -bottom-4 md:-left-7 md:-bottom-7 w-full h-full border border-[#07111f]/30"></div><img data-template-id="about-image" class="canva-image relative w-full aspect-[4/5] object-cover" loading="lazy" src="img/about.jpeg" alt="A digital nomad focused on work with a laptop at a tropical cafe in Bali, surrounded by lush greenery.">
-     </div>
-     <div class="reveal">
-      <p data-template-id="about-kicker" class="canva-text eyebrow font-semibold text-xs uppercase tracking-[.18em] mb-5" style="color: rgb(46, 125, 255); font-weight: 600; font-style: normal; font-size: 16px;">The person behind the practice</p>
-      <h2 data-template-id="about-title" class="canva-text display-font font-semibold leading-none mb-7" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 56px; letter-spacing: -0.06rem; line-height: 0.98;">Creative instinct,
-analytical mind.</h2>
-      <p data-template-id="about-description" class="canva-text leading-relaxed mb-8" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.65;">I blend creative thinking with analytical problem-solving to build ideas that connect with people. My background in digital marketing, finance, and visual design allows me to approach every project from both strategic and creative perspectives.</p>
-      <div class="flex flex-wrap gap-2">
-       <span data-template-id="skill-one" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(248, 251, 255); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Digital Marketing</span> <span data-template-id="skill-two" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(248, 251, 255); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">meta ads</span> <span data-template-id="skill-three" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(248, 251, 255); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">financial analysis</span> <span data-template-id="skill-four" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(248, 251, 255); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">digital ilustration</span> <span data-template-id="skill-five" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(248, 251, 255); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Visual storytelling</span> <span data-template-id="skill-six" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(248, 251, 255); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Content strategy</span>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION: ABOUT
+         ============================================================ -->
+    <section id="about" data-template-id="about-section" class="canva-section w-full px-6 md:px-8 py-20 md:py-28" style="background: rgb(255, 220, 220);">
+      <div class="w-full max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+        
+        <!-- // ABOUT IMAGE -->
+        <div class="reveal relative">
+          <div class="absolute -left-4 -bottom-4 md:-left-7 md:-bottom-7 w-full h-full border border-[#07111f]/30"></div>
+          <img data-template-id="about-image" class="canva-image relative w-full aspect-[4/5] object-cover" loading="lazy" src="img/about.jpeg" alt="A digital nomad focused on work with a laptop at a tropical cafe in Bali, surrounded by lush greenery.">
+        </div>
+        
+        <!-- // ABOUT TEXT -->
+        <div class="reveal">
+          <p data-template-id="about-kicker" class="canva-text eyebrow font-semibold text-xs uppercase tracking-[.18em] mb-5" style="color: rgb(255, 46, 46); font-weight: 600; font-style: normal; font-size: 16px;">The person behind the practice</p>
+          <h2 data-template-id="about-title" class="canva-text display-font font-semibold leading-none mb-7" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 56px; letter-spacing: -0.06rem; line-height: 0.98;">Hi, I’m Jannevel. Creative by instinct, analytical by nature.</h2>
+          <p data-template-id="about-description" class="canva-text leading-relaxed mb-8" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.65;">I’m a digital creative with a background in software development, digital marketing, and visual design. I enjoy turning ideas into practical solutions — from building websites and developing campaigns to creating visuals and analyzing performance.</p>
+          
+          <!-- // SKILLS TAGS -->
+          <div class="flex flex-wrap gap-2">
+            <span data-template-id="skill-one" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Digital Marketing</span>
+            <span data-template-id="skill-two" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">meta ads</span>
+            <span data-template-id="skill-three" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">financial analysis</span>
+            <span data-template-id="skill-four" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">digital ilustration</span>
+            <span data-template-id="skill-five" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Visual storytelling</span>
+            <span data-template-id="skill-six" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Content strategy</span>
+            <span data-template-id="skill-seven" class="canva-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Web Development</span>
+          </div>
+        </div>
+        
       </div>
-     </div>
-    </div>
-   </section>
-   <section id="contact" data-template-id="contact-section" class="canva-section w-full overflow-hidden px-6 md:px-8 py-20 md:py-28" style="background: rgb(7, 17, 31);">
-    <div class="w-full max-w-7xl mx-auto relative">
-     <div class="contact-orbit absolute -right-12 -top-14 md:right-12 md:top-0 flex items-center justify-center text-[#72a7ff]" aria-hidden="true">
-      <i data-lucide="sparkles" width="42" height="42"></i>
-     </div>
-     <div class="relative z-10 max-w-3xl">
-      <p data-template-id="contact-kicker" class="canva-text eyebrow text-[#72a7ff] font-semibold text-xs uppercase tracking-[.18em] mb-5" style="color: rgb(114, 167, 255); font-weight: 600; font-style: normal; font-size: 16px;">Open to thoughtful collaborations</p>
-      <h2 data-template-id="contact-title" class="canva-text display-font text-[#f8fbff] font-semibold leading-[.94] mb-7" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 65px; letter-spacing: -0.07rem; line-height: 0.92;">Let’s make the
-next signal count.</h2>
-      <p data-template-id="contact-description" class="canva-text text-[#f8fbff] max-w-xl leading-relaxed mb-8" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">Whether you’re looking for a creative collaborator, a digital marketer, or someone who enjoys solving problems through design and strategy, I’d love to connect.</p>
-      <p data-template-id="contact-description" class="canva-text display-font font-semibold" style="color: rgb(93, 163, 255); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">Get in touch</p>
-      <a id="contact-link" href="mailto:jannevel108@gmail.com" data-template-id="contact-button" class="canva-button focus-ring inline-flex items-center gap-3 px-6 py-4 bg-[#2e7dff] text-[#f8fbff] font-bold text-xs uppercase tracking-[.14em] hover:bg-[#f8fbff] hover:text-[#07111f] transition-colors" style="background: rgb(46, 125, 255); color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;">Email Me</a>
-      <a id="contact-link" href="https://www.linkedin.com/in/jan-n-093816323?utm_source=share_via&utm_content=profile&utm_medium=member_ios" data-template-id="contact-button" class="canva-button focus-ring inline-flex items-center gap-3 px-6 py-4 bg-[#f8fbff] text-[#f8fbff] font-bold text-xs uppercase tracking-[.14em] hover:bg-[#f8fbff] hover:text-[#07111f] transition-colors" style="background: rgb(46, 210, 255); color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;">linkedln</a>
-      <a id="contact-link" href="https://www.instagram.com/nevelapple?igsh=MXcyaXF1cDBnbWRyZQ%3D%3D&utm_source=qr" data-template-id="contact-button" class="canva-button focus-ring inline-flex items-center gap-3 px-6 py-4 bg-[#f8fbff] text-[#f8fbff] font-bold text-xs uppercase tracking-[.14em] hover:bg-[#f8fbff] hover:text-[#07111f] transition-colors" style="background: rgb(128, 217, 245); color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;">Instagram</a>
-     </div>
-    </div>
-   </section>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION: CONTACT
+         ============================================================ -->
+    <section id="contact" data-template-id="contact-section" class="canva-section w-full overflow-hidden px-6 md:px-8 py-20 md:py-28" style="background: rgb(31, 7, 7);">
+      <div class="w-full max-w-7xl mx-auto relative">
+        
+        <!-- // DECORATIVE ORBIT -->
+        <div class="contact-orbit absolute -right-12 -top-14 md:right-12 md:top-0 flex items-center justify-center text-[#ff8478]" aria-hidden="true">
+          <i data-lucide="sparkles" width="42" height="42"></i>
+        </div>
+        
+        <!-- // CONTENT -->
+        <div class="relative z-10 max-w-3xl">
+          <p data-template-id="contact-kicker" class="canva-text eyebrow text-[#ff8478] font-semibold text-xs uppercase tracking-[.18em] mb-5" style="color: rgb(235, 67, 75); font-weight: 600; font-style: normal; font-size: 16px;">Open to thoughtful collaborations</p>
+          <h2 data-template-id="contact-title" class="canva-text display-font text-[#f8fbff] font-semibold leading-[.94] mb-7" style="color: rgb(209, 46, 54); font-weight: 600; font-style: normal; font-size: 65px; letter-spacing: -0.07rem; line-height: 0.92;">Let's make the next signal count.</h2>
+          <p data-template-id="contact-description" class="canva-text text-[#f8fbff] max-w-xl leading-relaxed mb-8" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">Whether you're looking for a creative collaborator, a digital marketer, or someone who enjoys solving problems through design and strategy, I'd love to connect.</p>
+          
+          <!-- // CONTACT LINKS -->
+          <p data-template-id="contact-description" class="canva-text display-font font-semibold" style="color: rgb(231, 29, 29); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.6;">Get in touch</p>
+          
+          <a id="contact-link" href="mailto:jannevel108@gmail.com" data-template-id="contact-button" class="canva-button focus-ring inline-flex items-center gap-3 px-6 py-4 bg-[#ff8478] text-[#f8fbff] font-bold text-xs uppercase tracking-[.14em] hover:bg-[#f8fbff] hover:text-[#07111f] transition-colors" style="background: rgb(255, 46, 46); color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;">Email Me</a>
+          
+          <a id="contact-link" href="https://www.linkedin.com/in/jan-n-093816323?utm_source=share_via&utm_content=profile&utm_medium=member_ios" data-template-id="contact-button" class="canva-button focus-ring inline-flex items-center gap-3 px-6 py-4 bg-[#ff8478] text-[#f8fbff] font-bold text-xs uppercase tracking-[.14em] hover:bg-[#f8fbff] hover:text-[#07111f] transition-colors" style="background: rgb(190, 86, 86); color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;">linkedln</a>
+          
+          <a id="contact-link" href="https://www.instagram.com/nevelapple?igsh=MXcyaXF1cDBnbWRyZQ%3D%3D&utm_source=qr" data-template-id="contact-button" class="canva-button focus-ring inline-flex items-center gap-3 px-6 py-4 bg-[#f8fbff] text-[#f8fbff] font-bold text-xs uppercase tracking-[.14em] hover:bg-[#f8fbff] hover:text-[#07111f] transition-colors" style="background: rgb(221, 149, 149); color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 16px;">Instagram</a>
+        </div>
+        
+      </div>
+    </section>
+
   </main>
+
+
+  <!-- ==============================================================
+       FOOTER
+       ============================================================== -->
   <footer data-template-id="footer-section" class="canva-footer w-full px-6 md:px-8 py-7" style="background: rgb(2, 6, 12);">
-   <div class="w-full max-w-7xl mx-auto flex flex-col sm:flex-row gap-3 justify-between text-sm">
-    <span data-template-id="footer-brand" class="canva-text display-font font-semibold" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 20px;">JanNevel /Portfolio</span> <span data-template-id="footer-copy" class="canva-text opacity-70" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 14px;">© 2026 — Designed & developed by myself.</span>
-   </div>
+    <div class="w-full max-w-7xl mx-auto flex flex-col sm:flex-row gap-3 justify-between text-sm">
+      <span data-template-id="footer-brand" class="canva-text display-font font-semibold" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 20px;">JanNevel /Portfolio</span>
+      <span data-template-id="footer-copy" class="canva-text opacity-70" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 14px;">© 2026 — Designed & developed by myself.</span>
+    </div>
   </footer>
-  <script src="/_sdk/1b56991da13617fe.editing_sdk.js" integrity="sha512-7QHNPLPvkV/StrSqMG/kmvYbG8mJP4lGjSAmVe52ZYilblz47/1vWJa6sAdgi1w/a7EbAadWwTEJWNjrpiUkfg=="></script>
+
+
+  <!-- ==============================================================
+       MODALS
+       ============================================================== -->
+
+  <!-- ==============================================================
+       MODAL 1: DIGITAL MARKETING
+       ============================================================== -->
+  <div class="modal-overlay" id="modalMarketing">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h2>📊 Digital Marketing</h2>
+        <button class="close-btn" data-close="modalMarketing">&times;</button>
+      </div>
+      <div class="modal-body">
+        <span class="article-meta">✦ Campaign Portfolio • 2025-2026</span>
+        <div class="article-title">Audience, Activated.</div>
+        <p>
+          <!-- // EDIT: Ganti teks ini sesuai campaign kamu -->
+          Managing Digital marketing champgains from planning and audience targeting to Ad creation, peformance optimazation & conversion.
+        </p>
+        <ul class="work-list">
+          <!-- // EDIT: Ganti list project marketing kamu di sini -->
+          <li> Dahayu Residence - Meta Ads Champaign</li>
+          <li> Dahayu Residence - Champaign Optimazation & Customer Conversion</li>
+          <li> Arsya Residence - Meta Ads Champaign & & Customer Conversion</li>
+          <li> Bubble Sport Arena - Meta Ads Champaign & & Customer Conversion</li>          
+        </ul>
+        <p>Key Results</p>
+          <ul class="work-list">
+          <!-- // EDIT: Ganti list project marketing kamu di sini -->
+          <li> ~40% Increase in monthly conversion <br> Prada Properti</li>
+          <li> >100% Increase in weekly bookings <br> Bubble Sport Arena</li>         
+        </ul>
+        <p>
+          <span class="badge">#metaads</span>
+          <span class="badge">#leadgeneration</span>
+          <span class="badge">#conversion</span>
+          <span class="badge">#targeting</span>
+        </p>
+        <div class="modal-footer">
+          <span>📅 2025–2026</span>
+          <span> 4 campaign</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       MODAL 2: FINANCE ENTHUSIAST
+       ============================================================== -->
+  <div class="modal-overlay" id="modalFinance">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h2>💰 Finance & Data</h2>
+        <button class="close-btn" data-close="modalFinance">&times;</button>
+      </div>
+      <div class="modal-body">
+        <span class="article-meta">✦ Financial Analysis • 2026</span>
+        <div class="article-title">Numbers Tell Stories.</div>
+        <p>
+          <!-- // EDIT: Ganti teks ini sesuai project finance kamu -->
+          Handling daily business reporting and customer data analysis to monitor revenue, transactions, and operational performance across multiple business areas.
+        </p>
+        <ul class="work-list">
+          <!-- // EDIT: Ganti list project finance kamu di sini -->
+          <li>Daily Revenue Reporting — B.J Kopi Tracking daily sales, cash, and QRIS transactions.</li>
+          <li>Transaction & Revenue Reporting — Bubble Sport Arena Recording and organizing operational income and expenses.</li>
+          <li>Customer Analysis — Bubble Sport Arena Monitoring customer activity, bookings, and business performance.</li>
+          <li>Monthly Revenue Analysis — Consolidating daily records into monthly revenue reports and performance insights.</li>
+        </ul>
+        <p>
+          <span class="badge">#finance</span>
+          <span class="badge">#businessanalytics</span>
+          <span class="badge">#reporting</span>
+        </p>
+        <div class="modal-footer">
+          <span>📅 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       MODAL 3: DIGITAL ART
+       ============================================================== -->
+  <div class="modal-overlay" id="modalArt">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h2>💻 Web Development</h2>
+        <button class="close-btn" data-close="modalArt">&times;</button>
+      </div>
+      <div class="modal-body">
+        <span class="article-meta">✦ Web Portfolio • 2025-2026</span>
+        <div class="article-title">built to be experienced</div>
+        <p>
+          <!-- // EDIT: Ganti teks ini sesuai karya seni kamu -->
+          Websites and landing pages built with a focus on responsive layouts, clean visual design, intuitive interactions, and practical functionality.
+        </p>
+        <ul class="work-list">
+          <!-- // EDIT: Ganti list karya seni kamu di sini -->
+          <li> Prada Properti - Company Website 
+             <a href="https://pradaproperti.id" target="_blank" rel="noopener noreferrer"
+              style="padding: 8px 14px; border: 1px solid #222; border-radius: 999px; font-size: 12px; text-decoration: none; color: #222;">view ↗
+            </a>
+          </li>
+          <li> Dahayu Residence - Property Landing Page 
+             <a href="https://dahayuresidence.com" target="_blank" rel="noopener noreferrer"
+              style="padding: 8px 14px; border: 1px solid #222; border-radius: 999px; font-size: 12px; text-decoration: none; color: #222;">view ↗
+            </a>
+          </li>
+          <li> Arsya Residence - Property Landing Page 
+             <a href="https://arsyaresidence.com" target="_blank" rel="noopener noreferrer"
+              style="padding: 8px 14px; border: 1px solid #222; border-radius: 999px; font-size: 12px; text-decoration: none; color: #222;">view ↗
+            </a>
+          </li>
+          <li> Jannevel Portfolio - Personal Portfolio 
+             <a href="https://jannevel.vercel.app" target="_blank" rel="noopener noreferrer"
+              style="padding: 8px 14px; border: 1px solid #222; border-radius: 999px; font-size: 12px; text-decoration: none; color: #222;">view ↗
+            </a>
+          </li>
+        </ul>
+        <p>
+          <span class="badge">#webdevelopment</span>
+          <span class="badge">#landingpages</span>
+          <span class="badge">#frontend</span>
+        </p>
+        <div class="modal-footer">
+          <span>📅 2025–2026</span>
+          <span> 4 artworks</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================================================
+       MODAL 4: CREATIVE SOCIAL MEDIA
+       ============================================================== -->
+  <div class="modal-overlay" id="modalSocial">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h2>📱 Creative Social Media</h2>
+        <button class="close-btn" data-close="modalSocial">&times;</button>
+      </div>
+      <div class="modal-body">
+        <span class="article-meta">✦ Social Content • 2019–2026</span>
+        <div class="article-title">Made for the Scroll.</div>
+        <p>
+          <!-- // EDIT: Ganti teks ini sesuai project social media kamu -->
+          I’ve worked on social media content across different projects, handling everything from content planning and visual creation to post preparation and publishing.
+        </p>
+        <ul class="work-list">
+          <!-- // EDIT: Ganti list project social media kamu di sini -->
+          <li> Social Media Content — Prada Porperti</li>
+          <li> Social Media Content — Bubble Sport Arena</li>
+          <li> Creativve Posts — Personal Projects</li>
+          <li> Visual Content & Promotional Materials</li>
+        </ul>
+        <p>
+          <span class="badge">#socialmedia</span>
+          <span class="badge">#contentcreation</span>
+          <span class="badge">#visualstorytelling</span>
+        </p>
+        <div class="modal-footer">
+          <span>📅 2019–2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==============================================================
+       SCRIPTS
+       ============================================================== -->
   <script>
+    // ================================================================
+    // LUCIDE ICONS
+    // ================================================================
     lucide.createIcons();
 
+    // ================================================================
+    // MOBILE MENU TOGGLE
+    // ================================================================
     const menuToggle = document.getElementById("menu-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
 
@@ -248,6 +729,9 @@ next signal count.</h2>
       });
     });
 
+    // ================================================================
+    // SMOOTH SCROLL UNTUK NAV LINK
+    // ================================================================
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
       link.addEventListener("click", (event) => {
         event.preventDefault();
@@ -256,14 +740,23 @@ next signal count.</h2>
       });
     });
 
+    // ================================================================
+    // HERO BUTTON -> SCROLL KE WORK SECTION
+    // ================================================================
     document.getElementById("explore-button").addEventListener("click", () => {
       document.getElementById("work").scrollIntoView({ behavior: "smooth" });
     });
 
+    // ================================================================
+    // NAV SCROLL EFFECT
+    // ================================================================
     window.addEventListener("scroll", () => {
       document.getElementById("main-nav").classList.toggle("is-scrolled", window.scrollY > 32);
     }, { passive: true });
 
+    // ================================================================
+    // REVEAL ANIMATION ON SCROLL
+    // ================================================================
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -274,6 +767,74 @@ next signal count.</h2>
     }, { threshold: 0.12 });
 
     document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+
+    // ================================================================
+    // MODAL SYSTEM
+    // ================================================================
+
+    /**
+     * Buka modal berdasarkan ID
+     * @param {string} modalId - ID dari modal yang akan dibuka
+     */
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // matikan scroll
+      }
+    }
+
+    /**
+     * Tutup modal berdasarkan ID
+     * @param {string} modalId - ID dari modal yang akan ditutup
+     */
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // aktifkan scroll lagi
+      }
+    }
+
+    // ---- TRIGGER: Semua tombol dengan class .explore-trigger ----
+    document.querySelectorAll('.explore-trigger').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('data-target');
+        if (targetId) {
+          openModal(targetId);
+        }
+      });
+    });
+
+    // ---- CLOSE: Semua tombol dengan class .close-btn ----
+    document.querySelectorAll('.close-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const modalId = this.getAttribute('data-close');
+        if (modalId) {
+          closeModal(modalId);
+        }
+      });
+    });
+
+    // ---- CLOSE: Klik di luar modal (overlay) ----
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeModal(this.id);
+        }
+      });
+    });
+
+    // ---- CLOSE: Tombol ESCAPE ----
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+          closeModal(modal.id);
+        });
+      }
+    });
   </script>
- 
-</body></html>
+
+</body>
+</html>
