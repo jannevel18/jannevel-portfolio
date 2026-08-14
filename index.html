@@ -37,6 +37,21 @@
         font-weight: 600;
         font-style: normal;
       }
+      /* ============================================================
+            RESPONSIVE DEVICE ADJUSMENT
+            ============================================================ */
+       .biarkeren {
+            justify-content: left;
+            display: flex;
+        }
+
+        /* Saat mobile (lebar ≤ 768px) */
+        @media (max-width: 768px) {
+            .biarkeren {
+                justify-content: center;
+                display: flex: ;;
+            }
+        }
 
     /* ============================================================
        GRAIN TEXTURE
@@ -56,7 +71,7 @@
     .nav-shell { transition: background-color .35s ease, box-shadow .35s ease; }
     .nav-shell.is-scrolled {
       background: rgba(31, 7, 7, .97);
-      box-shadow: 0 10px 28px rgba(31, 7, 7, .23);
+      box-shadow: 0 10px 28px rgba(92, 24, 24, 0.23);
     }
 
     /* ============================================================
@@ -273,7 +288,7 @@
       gap: 1rem;
       flex-wrap: wrap;
       font-size: 0.85rem;
-      color: #2f3b5a;
+      color: #5a2f2f;
     }
 
     .modal-footer span {
@@ -328,7 +343,7 @@
     </div>
     
     <!-- // MOBILE MENU -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-[#f8fbff]/20 px-6 py-5 bg-[#07111f]">
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[#f8fbff]/20 px-6 py-5 bg-[#3C0000]">
       <div class="flex flex-col gap-4">
         <a href="#work" data-template-id="mobile-nav-work" class="my-link text-sm uppercase tracking-[.16em] text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">Selected work</a>
         <a href="#about" data-template-id="mobile-nav-about" class="my-link text-sm uppercase tracking-[.16em] text-[#f8fbff] focus-ring" style="color: rgb(248, 251, 255); font-weight: 600; font-style: normal; font-size: 16px;">About</a>
@@ -363,10 +378,10 @@
         <div class="mt-8 max-w-xl flex flex-col sm:flex-row sm:items-end gap-6">
           <p data-template-id="hero-description" class="my-text text-[#f8fbff] leading-relaxed text-base md:text-lg" style="color: rgb(248, 251, 255); font-weight: 400; font-style: normal; font-size: 18px; line-height: 1.5;">A multidisciplinary portfolio where digital marketing, finance, and visual storytelling come together to create work that earns attention.</p>
         </div>
-        <br>
-         <br>
+          <br>
+          <br>
         
-         <div style="justify-content: center; display: flex;">
+        <div class="biarkeren">
             <button id="explore-button" data-template-id="hero-button" type="button" class="my-button pxl-font focus-ring shrink-0 px-6 py-4 bg-[#3c0000] text-[#f8fbff] font-bold text-xs uppercase tracking-[.14em] hover:bg-[#f8fbff] hover:text-[#07111f] transition-colors" style="text-align: center; background: rgb(255, 46, 46); color: rgb(248, 251, 255); font-weight: 700; font-style: normal; font-size: 20px;">Explore the work</button>
         </div>
       </div>
@@ -407,10 +422,10 @@
             </div>
             <div class="p-7 flex flex-col grow">
               <p data-template-id="marketing-label" class="my-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(255, 46, 46); font-weight: 700; font-style: normal; font-size: 16px;">01 — Digital marketing</p>
-              <h3 data-template-id="marketing-title" class="my-text display-font font-semibold mb-3" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 30px;">Audience, activated.</h3>
-              <p data-template-id="marketing-description" class="my-text leading-relaxed text-sm opacity-80" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Strategic campaigns built from audience insights, performance data, and creative execution—designed to turn attention into measurable growth.</p>
+              <h3 data-template-id="marketing-title" class="my-text display-font font-semibold mb-3" style="color: rgb(31, 7, 7); font-weight: 600; font-style: normal; font-size: 30px;">Audience, activated.</h3>
+              <p data-template-id="marketing-description" class="my-text leading-relaxed text-sm opacity-80" style="color: rgb(31, 7, 7); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Strategic campaigns built from audience insights, performance data, and creative execution—designed to turn attention into measurable growth.</p>
               <!-- // TRIGGER: MODAL MARKETING -->
-              <button class="my-text text-xs uppercase tracking-[.15em] font-semibold mt-7 explore-trigger" data-target="modalMarketing" style="color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px; background: none; border: none; padding: 0; text-align: left;">Explore The Work</button>
+              <button class="my-text text-xs uppercase tracking-[.15em] font-semibold mt-7 explore-trigger" data-target="modalMarketing" style="color: rgb(31, 7, 7); font-weight: 700; font-style: normal; font-size: 16px; background: none; border: none; padding: 0; text-align: left;">Explore The Work</button>
             </div>
           </article>
           
@@ -455,10 +470,10 @@
             </div>
             <div class="p-7 flex flex-col grow">
               <p data-template-id="social-label" class="my-text text-xs uppercase tracking-[.15em] font-semibold mb-4" style="color: rgb(255, 46, 63); font-weight: 700; font-style: normal; font-size: 16px;">04 — Creative social media</p>
-              <h3 data-template-id="social-title" class="my-text display-font font-semibold mb-3" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 30px;">Made for the scroll.</h3>
-              <p data-template-id="social-description" class="my-text leading-relaxed text-sm opacity-80" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Platform-native concepts, content systems, and visual posts designed to feel timely, tactile, and worth sharing.</p>
+              <h3 data-template-id="social-title" class="my-text display-font font-semibold mb-3" style="color: rgb(31, 7, 7); font-weight: 600; font-style: normal; font-size: 30px;">Made for the scroll.</h3>
+              <p data-template-id="social-description" class="my-text leading-relaxed text-sm opacity-80" style="color: rgb(31, 7, 7); font-weight: 400; font-style: normal; font-size: 15px; line-height: 1.55;">Platform-native concepts, content systems, and visual posts designed to feel timely, tactile, and worth sharing.</p>
               <!-- // TRIGGER: MODAL SOCIAL -->
-              <button class="my-text text-xs uppercase tracking-[.15em] font-semibold mt-7 explore-trigger" data-target="modalSocial" style="color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px; background: none; border: none; padding: 0; text-align: left;">Explore The Work</button>
+              <button class="my-text text-xs uppercase tracking-[.15em] font-semibold mt-7 explore-trigger" data-target="modalSocial" style="color: rgb(31, 7, 7); font-weight: 700; font-style: normal; font-size: 16px; background: none; border: none; padding: 0; text-align: left;">Explore The Work</button>
             </div>
           </article>
           
@@ -482,18 +497,18 @@
         <!-- // ABOUT TEXT -->
         <div class="reveal">
           <p data-template-id="about-kicker" class="my-text eyebrow font-semibold text-xs uppercase tracking-[.18em] mb-5" style="color: rgb(255, 46, 46); font-weight: 600; font-style: normal; font-size: 16px;">The person behind the practice</p>
-          <h2 data-template-id="about-title" class="my-text display-font font-semibold leading-none mb-7" style="color: rgb(7, 17, 31); font-weight: 600; font-style: normal; font-size: 56px; letter-spacing: -0.06rem; line-height: 0.98;">Hi, I’m Jannevel. Creative by instinct, analytical by nature.</h2>
-          <p data-template-id="about-description" class="my-text leading-relaxed mb-8" style="color: rgb(7, 17, 31); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.65;">I’m a digital creative with a background in software development, digital marketing, and visual design. I enjoy turning ideas into practical solutions — from building websites and developing campaigns to creating visuals and analyzing performance.</p>
+          <h2 data-template-id="about-title" class="my-text display-font font-semibold leading-none mb-7" style="color: rgb(31, 7, 7); font-weight: 600; font-style: normal; font-size: 56px; letter-spacing: -0.06rem; line-height: 0.98;">Hi, I’m Jannevel. Creative by instinct, analytical by nature.</h2>
+          <p data-template-id="about-description" class="my-text leading-relaxed mb-8" style="color: rgb(31, 7, 7); font-weight: 400; font-style: normal; font-size: 17px; line-height: 1.65;">I’m a digital creative with a background in software development, digital marketing, and visual design. I enjoy turning ideas into practical solutions — from building websites and developing campaigns to creating visuals and analyzing performance.</p>
           
           <!-- // SKILLS TAGS -->
           <div class="flex flex-wrap gap-2">
-            <span data-template-id="skill-one" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Digital Marketing</span>
-            <span data-template-id="skill-two" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">meta ads</span>
-            <span data-template-id="skill-three" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">financial analysis</span>
-            <span data-template-id="skill-four" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">digital ilustration</span>
-            <span data-template-id="skill-five" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Visual storytelling</span>
-            <span data-template-id="skill-six" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Content strategy</span>
-            <span data-template-id="skill-seven" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(7, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Web Development</span>
+            <span data-template-id="skill-one" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(31, 7, 7); font-weight: 700; font-style: normal; font-size: 16px;">Digital Marketing</span>
+            <span data-template-id="skill-two" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(31, 7, 7); font-weight: 700; font-style: normal; font-size: 16px;">meta ads</span>
+            <span data-template-id="skill-three" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(31, 7, 7); font-weight: 700; font-style: normal; font-size: 16px;">financial analysis</span>
+            <span data-template-id="skill-four" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(37, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">digital ilustration</span>
+            <span data-template-id="skill-five" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(37, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Visual storytelling</span>
+            <span data-template-id="skill-six" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(37, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Content strategy</span>
+            <span data-template-id="skill-seven" class="my-tag px-4 py-2 border text-xs font-semibold uppercase tracking-[.12em]" style="background: rgb(255, 248, 248); color: rgb(37, 17, 31); font-weight: 700; font-style: normal; font-size: 16px;">Web Development</span>
           </div>
         </div>
         
